@@ -1,0 +1,63 @@
+<nz-layout class="layout">
+  <nz-header>
+    <div class="logo"></div>
+    <ul nz-menu nzTheme="dark" nzMode="horizontal">
+      <ng-container *ngFor="let vote of voteArr;index as i">
+        <li nz-menu-item (click)="selectVote(i)">{{vote}}</li>
+      </ng-container>
+    </ul>
+  </nz-header>
+  <nz-content>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>{{voteArr[selectIndex]}}</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <div class="inner-content">
+
+      <form nz-form [formGroup]="validateForm" class="ant-advanced-search-form">
+        <div nz-row [nzGutter]="0">
+          <ng-container *ngFor="let control of controlArray;index as i" >
+            <div nz-col  [nzLg]="i%2 == 0 ? 8:16 " [nzMd]="24" >
+              <nz-form-item nzFlex>
+                <ng-container *ngIf="control.isRequest"><nz-form-label nzRequired [nzFor]="'value' + i">{{ control.name }}</nz-form-label></ng-container>
+                <ng-container *ngIf="!control.isRequest"><nz-form-label [nzFor]="'value' + i">{{ control.name }}</nz-form-label></ng-container>
+                  <ng-container *ngIf="control.type == TypeArr.input">
+                    <nz-form-control nzHasFeedback  nzErrorTip="这是必填项">
+                      <input
+                        nz-input
+                        placeholder=""
+                        [formControlName]="'value' + i"
+                        [attr.id]="'value' + i"
+                      />
+                    </nz-form-control>
+                  </ng-container>
+                  <ng-container *ngIf="control.type == TypeArr.rate">
+                    <nz-form-control nzErrorTip="这是必填项">
+                      <nz-rate  [formControlName]="'value' + i" [attr.id]="'value' + i"></nz-rate>
+                    </nz-form-control>
+                  </ng-container>
+                  <ng-container *ngIf="control.type == TypeArr.textarea">
+                    <nz-form-control nzHasFeedback  nzErrorTip="这是必填项">
+                      <textarea [placeholder]="control.placeholder"  rows="3" nz-input  [formControlName]="'value' + i" [attr.id]="'value' + i"></textarea>
+                    </nz-form-control>
+                  </ng-container>
+
+              </nz-form-item>
+            </div>
+          </ng-container>
+        </div>
+        <div nz-row>
+          <div nz-col [nzSpan]="24" class="search-area">
+            <button nz-button [nzType]="'primary'" (click)="sendMes()">提交</button>
+            <button nz-button (click)="resetForm()">清空</button>
+          </div>
+        </div>
+      </form>
+<!--      <div class="search-result-list">-->
+<!--        Search Result List-->
+<!--      </div>-->
+
+
+    </div>
+  </nz-content>
+  <nz-footer>曙光 ©2019 Implement By zy</nz-footer>
+</nz-layout>
